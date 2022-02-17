@@ -1,0 +1,15 @@
+# https://editorconfig.org
+
+root = true
+
+[*]  #表示所有文件可适用
+charset = utf-8  #设置字符集
+indent_style = space #设置缩进风格
+indent_size = 2 #设置缩进大小
+end_of_line = lf #设置换行符
+insert_final_newline = true #设置最后一行是否加换行符
+trim_trailing_whitespace = true #设置末尾空格是否删除
+
+[*.md]
+insert_final_newline = false #设置最后一行是否加换行符
+trim_trailing_whitespace = false #设置末尾空格是否删除
