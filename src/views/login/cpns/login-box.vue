@@ -37,7 +37,7 @@ import loginPhone from './login-phone.vue'
 let keepPassword = ref(true)
 let accountRef = ref<InstanceType<typeof loginAccount>>()
 const loginClick = () => {
-  accountRef.value?.accountClick()
+  accountRef.value?.accountClick(keepPassword.value)
 }
 </script>
 

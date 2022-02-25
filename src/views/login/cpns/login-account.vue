@@ -7,8 +7,8 @@
       :rules="rules"
       class="account-form"
     >
-      <el-form-item label="账号" prop="username">
-        <el-input v-model="accountForm.username" placeholder="请输入用户名"></el-input>
+      <el-form-item label="账号" prop="name">
+        <el-input v-model="accountForm.name" placeholder="请输入用户名"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input
@@ -23,11 +23,14 @@
 
 <script setup lang="ts">
 import { reactive, ref, defineExpose } from 'vue'
+import { useStore } from 'vuex'
 import type { ElForm } from 'element-plus'
 import { ElMessage } from 'element-plus'
+import { setCache, getCache, removeCache } from '@/utils/cache'
+const store = useStore()
 let accountForm = reactive({
-  username: '',
-  password: ''
+  name: getCache('name') || '',
+  password: getCache('password') || ''
 })
 let rules = reactive({
   username: [
@@ -35,7 +38,7 @@ let rules = reactive({
       required: true,
       message: '请输入用户名',
       trigger: 'blur'
-    },
+    }
   ],
   password: [
     {
@@ -46,14 +49,24 @@ let rules = reactive({
   ]
 })
 let accountFormRef = ref<InstanceType<typeof ElForm>>()
-const accountClick = () => {
+const accountClick = (keepPassword: boolean) => {
   if (!accountFormRef.value) return
   accountFormRef.value.validate((valid) => {
     if (valid) {
-      ElMessage({
-        message: '登录成功',
-        type: 'success'
-      })
+      // ElMessage({
+      //   message: '登录成功',
+      //   type: 'success'
+      // })
+      //保存登录信息
+      if (keepPassword) {
+        setCache('name', accountForm.name)
+        setCache('password', accountForm.password)
+      } else {
+        removeCache('name')
+        removeCache('password')
+      }
+      //发送登录请求
+      store.dispatch('accountLogin', {...accountForm})
     } else {
       ElMessage({
         message: '表单验证失败',

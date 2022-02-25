@@ -27,11 +27,11 @@ class XBRequest {
     this.instance.interceptors.request.use(
       (config) => {
         //添加loading
-        this.loading = ElLoading.service({
-          lock: true,
-          text: '加载中...',
-          background: 'rgba(0, 0, 0, 0.7)'
-        })
+        // this.loading = ElLoading.service({
+        //   lock: true,
+        //   text: '加载中...',
+        //   background: 'rgba(0, 0, 0, 0.7)'
+        // })
         return config
       },
       (error) => {
@@ -43,7 +43,7 @@ class XBRequest {
         if (response.data.returnCode === '-1001') {
           console.log('请求失败~')
         } else {
-          this.loading.close()
+          // this.loading.close()
           return response
         }
       },
